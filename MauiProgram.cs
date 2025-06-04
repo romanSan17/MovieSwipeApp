@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using MovieSwipeApp.Services;
+using Microsoft.Extensions.Logging.Debug;
 
 namespace MovieSwipeApp;
 

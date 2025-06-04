@@ -1,5 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             x:Class="MovieSwipeApp.Views.LoginPage" Title="Вход">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieSwipeApp.Views.LoginPage"
+             Title="Вход">
+
     <VerticalStackLayout Padding="24" Spacing="12">
         <Entry x:Name="LoginEntry" Placeholder="Логин" />
         <Entry x:Name="PassEntry" Placeholder="Пароль" IsPassword="True" />

@@ -33,7 +33,7 @@ public static class DatabaseService
     public static async Task<bool> RegisterAsync(string login, string pass)
     {
         await EnsureInitialized();
-        if (await _db!.Table<User>().AnyAsync(u => u.Login == login)) return false;
+        if (await _db!.Table<User>().Where(u => u.Login == login).FirstOrDefaultAsync() != null) return false;
         var role = (login == "admin" && pass == "12345") ? "admin" : "user";
         await _db.InsertAsync(new User { Login = login, Password = pass, Role = role });
         return true;
@@ -60,13 +60,23 @@ public static class DatabaseService
     public static async Task<List<(Movie, UserMovie)>> GetLikedMoviesAsync(int userId)
     {
         await EnsureInitialized();
-        var query = from m in _db!.Table<Movie>()
-                    join um in _db.Table<UserMovie>() on m.Id equals um.MovieId
-                    where um.UserId == userId
-                    select new { m, um };
-        var list = await query.ToListAsync();
-        return list.Select(x => (x.m, x.um)).ToList();
+
+        var liked = await _db!.Table<UserMovie>()
+                              .Where(um => um.UserId == userId)
+                              .ToListAsync();
+
+        var movies = await _db.Table<Movie>().ToListAsync();
+
+        var result = liked.Join(
+            movies,
+            um => um.MovieId,
+            m => m.Id,
+            (um, m) => (m, um)
+        ).ToList();
+
+        return result;
     }
+
 
     public static Task UpdateRatingAsync(UserMovie um) => _db!.UpdateAsync(um);
 
