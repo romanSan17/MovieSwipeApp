@@ -1,0 +1,9 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Class="MovieSwipeApp.Views.WelcomePage"
+             Title="Добро пожаловать">
+    <VerticalStackLayout Spacing="16" Padding="40">
+        <Label Text="MovieSwipe" FontSize="32" HorizontalOptions="Center" />
+        <Button Text="Войти" Clicked="OnLogin"/>
+        <Button Text="Регистрация" Clicked="OnRegister"/>
+    </VerticalStackLayout>
+</ContentPage>

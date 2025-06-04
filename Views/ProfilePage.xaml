@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MovieSwipeApp.Views.ProfilePage"
+             Title="Понравившиеся">
+
+    <ContentPage.Resources>
+        <!-- Простейший стиль для карточек -->
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding"      Value="0"/>
+            <Setter Property="Margin"       Value="8"/>
+            <Setter Property="HasShadow"    Value="True"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <CollectionView x:Name="LikedView"
+                    SelectionMode="None">
+        <CollectionView.EmptyView>
+            <Label Text="Пока ничего не понравилось"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+        </CollectionView.EmptyView>
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame>
+                    <Grid ColumnDefinitions="120,*"
+                          RowDefinitions="*,Auto"
+                          Padding="8">
+
+                        <!-- Постер -->
+                        <Image Source="{Binding PosterUrl}"
+                               Grid.RowSpan="2"
+                               Aspect="AspectFill"
+                               WidthRequest="110"
+                               HeightRequest="160" />
+
+                        <!-- Название -->
+                        <Label Grid.Column="1"
+                               Text="{Binding Title}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               LineBreakMode="TailTruncation" />
+
+                        <!-- Оценка -->
+                        <toolkit:RatingView Grid.Row="1"
+                                            Grid.Column="1"
+                                            Value="{Binding Rating}"
+                                            Maximum="5"
+                                            ItemSize="28"
+                                            ValueChanged="OnRatingChanged" />
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

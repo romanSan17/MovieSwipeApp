@@ -1,0 +1,16 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MovieSwipeApp.Views.MainPage"
+             Title="Фильмы">
+    <Grid RowDefinitions="Auto,*">
+        <!-- Top bar -->
+        <HorizontalStackLayout Padding="8" Spacing="8">
+            <Picker x:Name="GenrePicker" WidthRequest="150" Title="Жанр" SelectionChanged="OnGenreChanged" />
+            <Button Text="Профиль" Clicked="OnProfile" />
+        </HorizontalStackLayout>
+
+        <!-- Swipe cards -->
+        <toolkit:SwipeCardView x:Name="CardView" Grid.Row="1" VerticalOptions="FillAndExpand" />
+    </Grid>
+</ContentPage>

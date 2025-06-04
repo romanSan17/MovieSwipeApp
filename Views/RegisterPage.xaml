@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Class="MovieSwipeApp.Views.RegisterPage"
+             Title="Регистрация">
+
+    <VerticalStackLayout Padding="24" Spacing="14">
+
+        <Entry x:Name="LoginEntry"
+               Placeholder="Логин"
+               ReturnType="Next" />
+
+        <Entry x:Name="PassEntry"
+               Placeholder="Пароль"
+               IsPassword="True"
+               ReturnType="Next" />
+
+        <Entry x:Name="ConfirmEntry"
+               Placeholder="Повторите пароль"
+               IsPassword="True"
+               ReturnType="Done" />
+
+        <Button Text="Создать аккаунт"
+                Clicked="OnRegisterClicked" />
+
+        <!-- Кнопка «Назад» на случай передумал -->
+        <Button Text="Назад"
+                Clicked="(OnBack)"
+                BackgroundColor="#cccccc"
+                TextColor="Black" />
+
+    </VerticalStackLayout>
+</ContentPage>
