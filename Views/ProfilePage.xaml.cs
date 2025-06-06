@@ -1,8 +1,8 @@
 using System.Collections.ObjectModel;
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using MovieSwipeApp.Models;
 using MovieSwipeApp.Services;
+
 
 namespace MovieSwipeApp.Views;
 
@@ -51,8 +51,8 @@ public partial class ProfilePage : ContentPage
 
     async void OnRatingChanged(object sender, ValueChangedEventArgs e)
     {
-        if (sender is not CommunityToolkit.Maui.Views.RatingView rv ||
-            rv.BindingContext is not LikedItem li) return;
+        if (sender is not RatingView rv || rv.BindingContext is not LikedItem li) return;
+
 
         // обновляем БД
         await DatabaseService.UpdateRatingAsync(li.UserMovie);

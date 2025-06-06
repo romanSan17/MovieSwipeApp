@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MovieSwipeApp.Views.MainPage"
              Title="Фильмы">
 
@@ -12,15 +10,33 @@
                     WidthRequest="150"
                     Title="Жанр"
                     SelectedIndexChanged="OnGenreChanged" />
-
             <Button Text="Профиль"
                     Clicked="OnProfile" />
         </HorizontalStackLayout>
 
-        <!-- Swipe cards -->
-        <toolkit:SwipeCardView x:Name="CardView"
-                               Grid.Row="1"
-                               VerticalOptions="FillAndExpand"
-                               Swiped="OnCardSwiped" />
+        <!-- List of swipeable movie cards -->
+        <CollectionView x:Name="MoviesCollectionView"
+                Grid.Row="1"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Лайк"
+                                   BackgroundColor="LightGreen"
+                                   Invoked="OnSwipeLike"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame Margin="10" Padding="10" BackgroundColor="LightGray" CornerRadius="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold"/>
+                                <Label Text="{Binding Genre}" FontSize="14"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
 </ContentPage>

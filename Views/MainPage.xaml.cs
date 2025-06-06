@@ -8,6 +8,7 @@ public partial class MainPage : ContentPage
 {
     readonly User _user;
     List<Movie> _movies = new();
+
     public MainPage(User user)
     {
         _user = user;
@@ -26,17 +27,21 @@ public partial class MainPage : ContentPage
     {
         var genre = GenrePicker.SelectedItem?.ToString();
         _movies = await DatabaseService.GetMoviesAsync(genre == "Все" ? null : genre);
-        CardView.ItemsSource = _movies;
-        CardView.Swiped += async (s, e) =>
-        {
-            if (e.Direction == SwipeDirection.Right)
-            {
-                var movie = (Movie)e.Item;
-                await DatabaseService.LikeMovieAsync(_user.Id, movie.Id);
-            }
-        };
+        MoviesCollectionView.ItemsSource = _movies;
     }
 
     async void OnGenreChanged(object sender, EventArgs e) => await LoadMovies();
-    async void OnProfile(object s, EventArgs e) => await Navigation.PushAsync(new ProfilePage(_user));
+
+    async void OnProfile(object sender, EventArgs e) => await Navigation.PushAsync(new ProfilePage(_user));
+
+    async void OnSwipeLike(object sender, EventArgs e)
+    {
+        if (sender is SwipeItem swipeItem && swipeItem.BindingContext is Movie movie)
+        {
+            await DatabaseService.LikeMovieAsync(_user.Id, movie.Id);
+            _movies.Remove(movie);
+            MoviesCollectionView.ItemsSource = null; // force UI refresh
+            MoviesCollectionView.ItemsSource = _movies;
+        }
+    }
 }
